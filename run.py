@@ -18,8 +18,6 @@ import subprocess
 from shutil import copyfile
 import re, io
 import pexpect
-import psutil
-
 try:
     input = raw_input
 except NameError:
