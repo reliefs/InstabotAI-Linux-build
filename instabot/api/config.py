@@ -10,7 +10,8 @@ USER_AGENT_BASE = (
     '{dpi}; {resolution}; {manufacturer}; '
     '{device}; {model}; {cpu}; en_US)')
 SIG_KEY_VERSION = '4'
-IG_SIG_KEY = 'c36436a942ea1dbb40d7f2d7d45280a620d991ce8c62fb4ce600f0a048c32c11'
+IG_SIG_KEY = 'a86109795736d73c9a94172cd9b736917d7d94ca61c9101164894b3f0d43bef4'
+#IG_SIG_KEY = '99e16edcca71d7c1f3fd74d447f6281bd5253a623000a55ed0b60014467a53b1'
 
 # Request variables taken from
 # https://github.com/ping/instagram_private_api/blob/422d61f0a8cc9de3d5a0e78bcba53751c44e5d63/instagram_private_api/client.py#L375
