@@ -75,8 +75,10 @@ class API(object):
             return proxy
 
     def setup_proxy(self):
-        proxies = "" # Your proxy if mutiple proxys put it in a list
-#        proxies = random.choice(proxies)
+#        proxies = ["http://rocket2_0wwoj:HmT1HCWb@163.172.161.94:15894", "http://rocket2_zu55d:T5EyKUXX@163.172.161.94:28824", "http://rocket2_mncjp:heguA0DY@163.172.161.94:34910"]
+
+        proxies = ["http://rocket2_0wwoj:HmT1HCWb@163.172.161.94:15894", "http://rocket2_zu55d:T5EyKUXX@163.172.161.94:28824"]
+        proxies = random.choice(proxies)
         return proxies
 
     def login(self, username=None, password=None, force=False, proxy=None,
@@ -136,6 +138,8 @@ class API(object):
                             with open(ig_username + "check_blocked.txt", "w+") as f:
                                 f.write(str(block))
                     self.logger.info('Checkpoint challenge required...')
+                    with open("checkpoint.txt", "w+") as f:
+                        f.write("True")
                     solved = self.solve_challenge()
                     if solved:
                         use_cookie=True
@@ -300,7 +304,7 @@ class API(object):
             self.session.proxies['http'] = scheme + self.proxy
             self.session.proxies['https'] = scheme + self.proxy
 
-    def send_request(self, endpoint, post=None, login=False, with_signature=True, headers=None):
+    def send_request(self, endpoint, post=None, login=False, with_signature=True, headers=None, extra_sig=None):
         if (not self.is_logged_in and not login):
             msg = "Not logged in!"
             self.logger.critical(msg)
@@ -359,6 +363,7 @@ class API(object):
                     "That means 'too many requests'. I'll go to sleep "
                     "for {} minutes.".format(sleep_minutes))
                 time.sleep(sleep_minutes * 60)
+#                return self.send_request(endpoint, post, login, with_signature, headers, extra_sig)
             elif response.status_code == 400:
                 response_data = json.loads(response.text)
 
