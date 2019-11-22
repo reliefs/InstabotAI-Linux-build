@@ -7,7 +7,9 @@ import random
 import sys, stat
 from mtcnn.mtcnn import MTCNN
 import cv2
+#import json
 import random
+#import logging
 import shutil
 
 try:
@@ -299,10 +301,10 @@ class Bots(object):
             shutil.rmtree(username, ignore_errors=True) # Remove dir username after scanning
 
     def like_followers(username, time_sleep):
-        Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
-        time.sleep(60)
+        Bots.save_user_info(ig_username, "Scraping users pls wait 1 min")
         user_id = bot.get_user_id_from_username(username)
-        followers = bot.get_user_followers(user_id, nfollows=6000)
+        time.sleep(60)
+        followers = bot.get_user_followers(user_id, nfollows=500)
 
         for user in followers:
             pusername = bot.get_username_from_user_id(user)
@@ -312,8 +314,9 @@ class Bots(object):
 
     def like_following(username, time_sleep):
         Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
-        time.sleep(60)
+        Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
         user_id = bot.get_user_id_from_username(username)
+        time.sleep(60)
         following = bot.get_user_following(user_id)
 
         for user in following:
@@ -322,23 +325,13 @@ class Bots(object):
             time.sleep(int(time_sleep))
 
     def like_hashtags(hashtag, time_sleep):
-        '''
-        like hashtags
-        @params: hashtag (string),
-        @params: time_sleep (int),
-        '''
         Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
         time.sleep(60)
         hashtags = bot.get_hashtag_users(hashtag)
-        while True:
-            hashtags = Bots.convert_usernames_to_list(hashtag)
-            for hashtag in hashtags:
-                hashtags = bot.get_hashtag_users(hashtag)
-                bot.logger.info("Hashtag selected: " + hashtag)
-                for user in hashtags:
-                    pusername = bot.get_username_from_user_id(user)
-                    Bots.face_detection(pusername)
-                    time.sleep(int(time_sleep))
+        for user in hashtags:
+            pusername = bot.get_username_from_user_id(user)
+            Bots.face_detection(pusername)
+            time.sleep(int(time_sleep))
 
     def user_hashtag_comment(hashtag, comment, time_sleep):
         '''
@@ -350,6 +343,7 @@ class Bots(object):
         while True:
             hashtags = Bots.convert_usernames_to_list(hashtag)
             for hashtag in hashtags:
+                time.sleep(60)
                 hashtags = bot.get_hashtag_users(hashtag)
                 bot.logger.info("Hashtag selected: " + hashtag)
                 for user in hashtags:
@@ -368,7 +362,7 @@ class Bots(object):
         while True:
             hashtags = Bots.convert_usernames_to_list(hashtags)
             for hashtag in hashtags:
-                hashtags = bot.get_total_hashtag_medias(hashtag)
+                hashtags = bot.get_total_hashtag_medias(hashhtag)
                 for user in hashtags:
                     pusername = bot.get_username_from_user_id(user)
                     Bots.face_detection_comment(pusername, comment)
@@ -477,7 +471,7 @@ class Bots(object):
             points = points + 1000
             points = str(points)
             print(points)
-            with open(ig_username + "x.txt", "w+") as f:
+            with open("x.txt", "w+") as f:
                 f.write(points)
             print("You have activated your code")
         else:
@@ -485,50 +479,29 @@ class Bots(object):
 
     def follow_users_following_ai(username, time_sleep):
         Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
+        time.sleep(60)
         while True:
-            try:
-                username = Bots.convert_usernames_to_list(username)
-                for user in username:
-                    user_id = bot.get_user_id_from_username(user)
-                    followings = bot.get_user_following(user_id, nfollows=2000)
-                    for user_id in followings:
-                        username = bot.get_username_from_user_id(user_id)
-                        Bots.face_detection_follow(username)
-                        time_sleep = int(time_sleep)
-                        time.sleep(time_sleep)
-            except:
-                user_id = bot.get_user_id_from_username(username)
-                followings = bot.get_user_following(user_id, nfollows=2000)
+            username = Bots.convert_usernames_to_list(username)
+            for user in username:
+                user_id = bot.get_user_id_from_username(user)
+                followings = bot.get_user_following(user_id, nfollows=500)
                 for user_id in followings:
                     username = bot.get_username_from_user_id(user_id)
                     Bots.face_detection_follow(username)
-                    time_sleep = int(time_sleep)
                     time.sleep(time_sleep)
-
 
     def follow_users_followers_ai(username, time_sleep):
         Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
         time.sleep(60)
         while True:
-            try:
-                username = Bots.convert_usernames_to_list(username)
-                for user in username:
-                    user_id = bot.get_user_id_from_username(user)
-                    followers = bot.get_user_followers(user_id, nfollows=2000)
-                    for user_id in followers:
-                        username = bot.get_username_from_user_id(user_id)
-                        Bots.face_detection_follow(username)
-                        time_sleep = int(time_sleep)
-                        time.sleep(time_sleep)
-            except:
-                user_id = bot.get_user_id_from_username(username)
-                followers = bot.get_user_followers(user_id, nfollows=2000)
+            username = Bots.convert_usernames_to_list(username)
+            for user in username:
+                user_id = bot.get_user_id_from_username(user)
+                followers = bot.get_user_followers(user_id, nfollows=500)
                 for user_id in followers:
                     username = bot.get_username_from_user_id(user_id)
                     Bots.face_detection_follow(username)
-                    time_sleep = int(time_sleep)
                     time.sleep(time_sleep)
-
 
     def follow_users_hashtag_ai(hashtag, time_sleep):
         Bots.save_user_info(ig_username, "Scraping users pls wait 2-4 min")
