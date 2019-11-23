@@ -110,7 +110,7 @@ def start_logged_in():
 
     try:
         global child
-        child = pexpect.spawn('python process2.py -u ' + '"' + username + '"' + ' -p ' + '"' + password + '"')
+        child = pexpect.spawn('python3 process2.py -u ' + '"' + username + '"' + ' -p ' + '"' + password + '"')
 #        p = psutil.Process(pid)
 #        child = ptyprocess.PtyProcess.spawn(['python'], 'process2.py -u ' + '"' + username + '"' + ' -p ' + '"' + password + '"')
 #        child.logfile = sys.stdout
